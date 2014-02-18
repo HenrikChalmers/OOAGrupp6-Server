@@ -18,7 +18,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Communication  implements Runnable {
-	private ServerSocket server;
+	private Socket soc;
 	private Boolean recieveInited = false;
 	private CommRecieve recComm ;
 	
@@ -28,8 +28,8 @@ public class Communication  implements Runnable {
 	
 	private final int CLIENT_PORT = 4445;
 
-	public Communication(ServerSocket server) { 
-		
+	public Communication(Socket soc) { 
+		this.soc = soc;
 		fileMan = new FileManagement();
 
 	}
@@ -70,58 +70,31 @@ public class Communication  implements Runnable {
 				
 				// Now true is to be sent back
 				System.out.println("True is sent back due to RIGHT password");
-				send(iaddr, CLIENT_PORT, (Boolean) true);					//Sends back to port
+				send(soc, (Boolean) true);					//Sends back to port
 			}
 			else{
 				System.out.println("False is sent back due to WRONG password");
-				send(iaddr, CLIENT_PORT, (Object) false);
+				send(soc, (Object) false);
 			}
 		}catch(Exception e){
 			System.out.println("Did not recieve password");
 
 			System.out.println("False is sent back due to INVALID messsage recieved");
-			send(iaddr, CLIENT_PORT, (Object)false);
+			send(soc, (Object)false);
 		}
 		
 		
 
 	}
 	
-
-	/**
-	 * Send message to specific ip address and port with the message "message".
-	 * @param ipAddress	ipaddress
-	 * @param port		port nr
-	 * @param message	the message to be sent
-	 */
-	/*public void send(InetAddress ipAddress, int port, String message){	//Send message to ip ipAddress on port port lol :)
-				
-			try {
-				Socket sendSoc = new Socket(ipAddress, port);
-				DataOutputStream out = new DataOutputStream(sendSoc.getOutputStream() );
-				out.writeBytes(message);
-				
-				sendSoc.close();
-				
-			} catch (IOException e) {
-				System.out.println("Client is not recieving, kill it with fire!");
-				e.printStackTrace();
-			}		
-			
-		
-
-	}*/
-	
-
-	
-	public void send(InetAddress ipAddress, int port, Object objBoolMessage){	//Send message to ip ipAddress on port port lol :)
+	public void send(Socket soc, Object objBoolMessage){	//Send message objBoolMessage to socket soc
 		
 		try {
-			Socket sendSoc = new Socket(ipAddress, port);
-			ObjectOutputStream out = new ObjectOutputStream(sendSoc.getOutputStream() );
-			out.writeObject(true);
+			
+			ObjectOutputStream out = new ObjectOutputStream(soc.getOutputStream() );
+			out.writeObject(objBoolMessage);
 			out.flush();
-			sendSoc.close();
+			
 			
 		} catch (IOException e) {
 			System.out.println("Client not active, did you close clients recieveing part?");	

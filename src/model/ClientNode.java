@@ -10,6 +10,7 @@ package model;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -56,7 +57,7 @@ public class ClientNode implements Observer {
 			//if not add new, otherwise do nothing
 			
 			if( !clientConnected.containsKey(arg) ){
-				addConnection((InetAddress) arg);
+				addConnection((InetAddress) arg, ((CommRecieve)o).getSocket()   );
 			}
 		}
 		else if(o instanceof CommRecieve && arg instanceof String){
@@ -84,9 +85,9 @@ public class ClientNode implements Observer {
 
 	}
 
-	private void addConnection(InetAddress iaddr) {
+	private void addConnection(InetAddress iaddr, Socket soc) {
 		System.out.println("Add Connection");
-		clientConnected.put(iaddr, new Communication(server) );
+		clientConnected.put(iaddr, new Communication(soc) );
 		new Thread( clientConnected.get(iaddr) );
 		
 		

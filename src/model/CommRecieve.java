@@ -78,6 +78,10 @@ public class CommRecieve extends Observable implements Runnable {
 		return message;
 	}
 	
+	public Socket getSocket(){
+		return soc;
+	}
+	
 	public InetAddress getInetAddress(){
 		return iaddr;
 	}
