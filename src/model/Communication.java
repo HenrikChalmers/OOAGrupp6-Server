@@ -94,12 +94,13 @@ public class Communication  implements Runnable {
 	 * @param port		port nr
 	 * @param message	the message to be sent
 	 */
-	public void send(InetAddress ipAddress, int port, String message){	//Send message to ip ipAddress on port port lol :)
+	/*public void send(InetAddress ipAddress, int port, String message){	//Send message to ip ipAddress on port port lol :)
 				
 			try {
 				Socket sendSoc = new Socket(ipAddress, port);
 				DataOutputStream out = new DataOutputStream(sendSoc.getOutputStream() );
 				out.writeBytes(message);
+				
 				sendSoc.close();
 				
 			} catch (IOException e) {
@@ -109,7 +110,7 @@ public class Communication  implements Runnable {
 			
 		
 
-	}
+	}*/
 	
 
 	
@@ -118,7 +119,8 @@ public class Communication  implements Runnable {
 		try {
 			Socket sendSoc = new Socket(ipAddress, port);
 			ObjectOutputStream out = new ObjectOutputStream(sendSoc.getOutputStream() );
-			out.writeObject(objBoolMessage);
+			out.writeObject(true);
+			out.flush();
 			sendSoc.close();
 			
 		} catch (IOException e) {
