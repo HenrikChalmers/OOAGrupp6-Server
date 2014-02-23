@@ -33,8 +33,8 @@ public class ClientNode implements Observer {
 			recieveInit();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Another instance of server is already initialized, or some other program is using port: " + port +"\nServer shutdown.");
+			//e.printStackTrace();		//TODO remove after debug
 		}
 
 	}
@@ -81,7 +81,7 @@ public class ClientNode implements Observer {
 	private void addConnection(InetAddress iaddr, Socket soc) {
 		System.out.println("Add Connection");
 		clientConnected.put(iaddr, new Communication(soc));
-		clientConnected.get(iaddr).addObserver(this);				//Lägg till addObserver(this.)
+		clientConnected.get(iaddr).addObserver(this);				
 		new Thread(clientConnected.get(iaddr));
 
 
