@@ -181,7 +181,7 @@ public class Window {
 	
 	public String getAddress()
 	{	
-		String addressLocal = "unknown local", addressPublic = "unknown public";
+		String addressLocal = "unknown", addressPublic = "unknown";
 		try {
 			addressLocal = InetAddress.getLocalHost().getHostAddress();				//Get local ip address
 			
@@ -195,7 +195,8 @@ public class Window {
 			addressPublic = in.readLine();
 			System.out.println("addressPublic");
 		}catch(UnknownHostException e){
-			e.printStackTrace();
+			System.out.println("No internet connection, thereforce no Public ip");
+			//e.printStackTrace();
 		}
 		catch(MalformedURLException e){
 			System.out.println("Faulty URL for public IP address, if you dont have an internet connection this is nothing to worry about");
@@ -203,7 +204,7 @@ public class Window {
 		}catch(IOException e){
 			System.out.println("Could not read from URL provided");
 			e.printStackTrace();
-		}
+		}																		//TODO remove comment (/**/) after debug, it is slow for testing without internet
 		String allAddress ="Local: " +  addressLocal + "\nPublic: " + addressPublic;
 		
 		

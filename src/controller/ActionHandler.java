@@ -49,11 +49,11 @@ public class ActionHandler { //Singleton
 				ClientNode clientNode = ClientNode.getInstance(SERVER_PORT);
 
 				haltFlag = false;
-				while(!haltFlag){											//Stop thread
+				while(!haltFlag){											//TODO Dont know if all (=null) are neccesary, might only need kill from CommRecieve
 				if(logicThreadEnd){
 					interrupt(); 
+					clientNode.killClientNode();
 					clientNode = null;
-					System.out.println("End server join();");
 					haltFlag = true;
 					
 				}
