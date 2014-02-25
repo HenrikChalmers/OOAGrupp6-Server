@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		System.out.println("puplbic static void main(String[] arg){};");
+		System.out.println("puplbic static void main(String[] arg){};");		//TODO remove after debug
 		Workflow flow = new Workflow();
 
 	}

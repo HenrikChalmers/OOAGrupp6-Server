@@ -204,7 +204,7 @@ public class Window {
 		}catch(IOException e){
 			System.out.println("Could not read from URL provided");
 			e.printStackTrace();
-		}																		//TODO remove comment (/**/) after debug, it is slow for testing without internet
+		}																		
 		String allAddress ="Local: " +  addressLocal + "\nPublic: " + addressPublic;
 		
 		

@@ -38,23 +38,6 @@ public class Communication extends Observable implements Runnable {
 
 	}
 
-	// TODO remove when working
-	/**
-	 * Check what type of message has been recieved. For now it only check for login recieved.
-	 */
-	/*
-	 * public void messageRecieved(InetAddress iaddr , String message){ if(iaddr != null && message != null){ //Only works for login atm.
-	 * this.iaddr = iaddr; this.message = message; String[] messageType = message.split(" "); //You should now have (login/schedule)
-	 * (PersonalNumber) (Password) in messageType
-	 * 
-	 * if(messageType[0].contains("login")){
-	 * 
-	 * loginRecieved(iaddr, message); } else if(messageType[0].contains("schedule")){ //TODO Send back schedule }
-	 * 
-	 * 
-	 * iaddr= null; message = null; } }
-	 */
-
 	/**
 	 * Check what type of message has been recieved. For now it only check for login recieved.
 	 */
@@ -139,11 +122,7 @@ public class Communication extends Observable implements Runnable {
 			out.flush();
 
 		} catch (IOException e) {
-			System.out.println("Client not active, did you close clients recieveing part?"); // TODO
-			// close
-			// connection
-			// to
-			// client
+			System.out.println("Client not active, did you close clients recieveing part?"); // TODO close connection to client.
 
 			try {
 				soc.close();
