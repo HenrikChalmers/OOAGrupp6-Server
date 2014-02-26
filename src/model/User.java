@@ -2,18 +2,30 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Has one specific user"s" all combined information
+ * 
+ * @author Henrik Johansson
+ * @version 2014-02-26
+ */
 public class User implements Serializable{
+	
 	private String perNr,password,status,name;
-	//private Schedule		//Todo fix so that the users have a scheme
+	//private Schedule		//Todo fix so that the users have a schedule
 
+	/**
+	 * @param perNr
+	 * @param password
+	 * @param status
+	 */
 	public User(String perNr, String password, String status){
 		this.perNr = perNr;
 		this.password = password;
 		this.status = status;
-		this.name = name;
-		
 		
 	}
+	
+
 	
 	public String getName(){
 		return name;
