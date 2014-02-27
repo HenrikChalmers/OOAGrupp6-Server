@@ -3,6 +3,8 @@ package model;
 
 import java.io.Serializable;
 
+import model.Schedule.*;
+
 /**
  * Has one specific user"s" all combined information
  * 
@@ -12,7 +14,7 @@ import java.io.Serializable;
 public class User implements Serializable{
 	
 	private String perNr,password,status,name;
-	//private TEMPSchedule fullSchedule = null;				//TODO Simon 
+	private Schedule userSchedule;				
 
 	/**
 	 * @param perNr
@@ -27,7 +29,6 @@ public class User implements Serializable{
 	}
 	
 
-	
 	public String getName(){
 		return name;
 	}
@@ -54,19 +55,10 @@ public class User implements Serializable{
 		return perNr;
 	}
 	
-	
-	/*								//TODO Simon Lägg till så att man kan använda schemat här i User. 
-	 * 								//Hela User kommer att skickas så du behöver endast få det att fungera från User klassen.
-	 * 
-	public TEMPSchedule getWeek(){		
-		return fullSchedule;
+	public void setSchedule(Schedule fullSchedule){
+		this.userSchedule = fullSchedule;
 	}
 	
-	public void setSchedule(TEMPSchedule fullSchedule){
-		this.fullSchedule = fullSchedule;
-	}
 	
-	public void setWeekSchedule(){
-		
-	}*/
+
 }
