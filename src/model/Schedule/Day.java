@@ -2,7 +2,7 @@ package model.Schedule;
 /**
  * Write a description of class Day here.
  * 
- * @author Simon 
+ * @author Simon Planhage
  * @version 2013-02-28
  */
 
