@@ -12,6 +12,7 @@ import model.Schedule.*;
  * @version 2014-02-26
  */
 public class User implements Serializable{
+	private static final long serialVersionUID = -6000874821084879926L; 	//Copy from client side
 	
 	private String perNr,password,status,name;
 	private Schedule userSchedule;				
