@@ -14,7 +14,9 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Observable;
 
-public class Communication extends Observable {
+import view.Window;
+
+public class Communication {
 	private Socket soc;
 	private Boolean recieveInited = false;
 	private CommRecieve recComm;
@@ -44,9 +46,15 @@ public class Communication extends Observable {
 			String whatToDo = (String) linkedMessage.get(0);
 			if (whatToDo.compareToIgnoreCase("Login") == 0) { // Login has been recieved  previous: linkedMessage.get(0).equals("login")
 				loginRecieved(linkedMessage);
+				
+				fileMan.addToLog(whatToDo, clientHandler.getAddress());
+			
 			} else if (whatToDo.compareToIgnoreCase("Logout") == 0) {
 				adminLogin = false;
 				normalLogin = false;
+				
+				fileMan.addToLog(whatToDo, clientHandler.getAddress());
+				
 			} else if (whatToDo.compareToIgnoreCase("GetAllUsers") == 0) {
 				Users users = fileMan.getUsersList();
 

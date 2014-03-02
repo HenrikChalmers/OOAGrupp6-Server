@@ -5,12 +5,19 @@
  * @version 2013-02-20
  */
 package view;
+
+import model.FileManagement;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -25,14 +32,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+
 
 import controller.ActionHandler;
 
 /**
  * @author Olof
- *
+ * @version 2014-02-29
  */
 
 /**
@@ -44,11 +53,12 @@ public class Window {
 	private JFrame frame;
 	private JButton start, stop;
 	private JPanel panel1, panel2;
-	private JTextField port;
-	private JTextArea ip;
-	private JLabel ipadr, portadr;
+	private JTextArea ip, port, connections;
+	private JLabel ipadr, portadr, connect;
 	private JMenuItem startItem, stopItem;
+	private JScrollPane sp;
 	private int SERVER_PORT;
+	private FileManagement fileMan;
 	
 	public Window(int SERVER_PORT)
 	{
@@ -58,11 +68,15 @@ public class Window {
 	
 	public void buildWindow(){
 		
+		UpdateWindow thread = new UpdateWindow(this);
+		fileMan = new FileManagement();
+		
 		frame = new JFrame("MarximumWorker 9001 Server");
 		Container contentPane = frame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		panel1 = new JPanel(new FlowLayout());
 		panel2 = new JPanel(new FlowLayout());
+		
 		makeMenuBar();
 
 		//Create Buttons
@@ -91,15 +105,18 @@ public class Window {
 		
 		ipadr = new JLabel();
 		portadr= new JLabel();
+		connect = new JLabel();
 		
 		ipadr.setText("IP-address:");
 		portadr.setText("Port:");
+		connect.setText("Connections:");
 		
-		// Create textfields
+		// Create textareas
 		
 		ip = new JTextArea();
-		port = new JTextField();
-
+		port = new JTextArea();
+		connections = new JTextArea();
+		
 		ip.setEditable(false);
 		ip.setText(getAddress());
 
@@ -111,12 +128,21 @@ public class Window {
 		panel2.add(portadr);
 		panel2.add(port);
 		
+		connections = new JTextArea(5,20);
+		connections.setEditable(false);	
+		getText();
+		sp = new JScrollPane(connections);
+
+		
 		contentPane.add(panel1, BorderLayout.SOUTH);
-		contentPane.add(panel2, BorderLayout.CENTER);
+		contentPane.add(panel2, BorderLayout.NORTH);
+		contentPane.add(sp, BorderLayout.CENTER);
 		
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500,200);
+		frame.setSize(500,300);
 		frame.setVisible(true);
+		frame.setLocationRelativeTo(null);
+		thread.start();
 	}
 	
 	public void makeMenuBar()
@@ -226,6 +252,15 @@ public class Window {
 		return port;
 		
 	}
+	/*
+	 * @author Olof Spetz
+	 * 	Sets the text for the textarea. 
+	 */
+	public void getText()
+	{	
+		fileMan.readFromLog(connections);
+	}
+	
 }
 
 

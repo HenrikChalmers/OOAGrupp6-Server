@@ -2,11 +2,19 @@ package model;
 
 
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.LinkedList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 /**
  * @author Erik
@@ -18,6 +26,8 @@ public class ClientHandler extends Thread {
 	private Communication	cmnds;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
+
+	
 	
 	public ClientHandler(Socket clientSocket) {
 		this.clientSocket = clientSocket;
@@ -82,6 +92,15 @@ public class ClientHandler extends Thread {
 			e1.printStackTrace();
 		}
 	}
-		
+	/*
+	 * 	@author Olof Spetz
+	 * 	returns the IP:Port address from client
+	 * 
+	 */
+	public String getAddress()
+	{
+		String ip =  clientSocket.getRemoteSocketAddress().toString();
+		return ip;
+	}
 }
 
