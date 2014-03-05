@@ -127,11 +127,24 @@ public class Communication extends Observable {
 				clientHandler.send(linkedMessageReturn);
 				
 			} else if(whatToDo.compareToIgnoreCase("NewTimeSlot") == 0) {
+				Users users = fileMan.getUsersList();
+				
+				
 				scheduleHandler.setScheduledTime((int)linkedMessage.get(1), (int)linkedMessage.get(2), (int)linkedMessage.get(3), (String)linkedMessage.get(4), (String)linkedMessage.get(5));
-			
+
+				fileMan.writeUsersFile(users);
+				
 			/*	LinkedList<Object> linkedMessageReturn = new LinkedList<Object>();
 				linkedMessageReturn.add("NewTimeSlot");
 				linkedMessageReturn.add(user);*/
+			} else if (whatToDo.compareToIgnoreCase("CreateDefaultSchedule") == 0){
+				Users users = fileMan.getUsersList();
+				
+				scheduleHandler.populateDefaultSchedule();
+				
+
+				fileMan.writeUsersFile(users);
+				
 			}
 
 		}
