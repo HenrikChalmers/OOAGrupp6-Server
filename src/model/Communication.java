@@ -49,9 +49,11 @@ public class Communication extends Observable {
 			String whatToDo = (String) linkedMessage.get(0);
 			if (whatToDo.compareToIgnoreCase("Login") == 0) { // Login has been recieved  previous: linkedMessage.get(0).equals("login")
 				loginRecieved(linkedMessage);
+				fileMan.addToLog(whatToDo, clientHandler.getAddress());
 			} else if (whatToDo.compareToIgnoreCase("Logout") == 0) {
 				adminLogin = false;
 				normalLogin = false;
+				fileMan.addToLog(whatToDo, clientHandler.getAddress());
 			} else if (whatToDo.compareToIgnoreCase("GetAllUsers") == 0) {
 				Users users = fileMan.getUsersList();
 
@@ -85,7 +87,9 @@ public class Communication extends Observable {
 
 			} else if (whatToDo.compareToIgnoreCase("NewUser") == 0) { //Add new user 
 				Users users = fileMan.getUsersList();
-				users.add((String) linkedMessage.get(1), (String) linkedMessage.get(2), (String) linkedMessage.get(3));
+				//users.add((String) linkedMessage.get(1), (String) linkedMessage.get(2), (String) linkedMessage.get(3));
+				users.add( (User)linkedMessage.get(1) );
+				
 				fileMan.writeUsersFile(users);
 
 			} else if (whatToDo.compareToIgnoreCase("EditUser") == 0) { // 
@@ -122,6 +126,12 @@ public class Communication extends Observable {
 				linkedMessageReturn.add(user);
 				clientHandler.send(linkedMessageReturn);
 				
+			} else if(whatToDo.compareToIgnoreCase("NewTimeSlot") == 0) {
+				scheduleHandler.setScheduledTime((int)linkedMessage.get(1), (int)linkedMessage.get(2), (int)linkedMessage.get(3), (String)linkedMessage.get(4), (String)linkedMessage.get(5));
+			
+			/*	LinkedList<Object> linkedMessageReturn = new LinkedList<Object>();
+				linkedMessageReturn.add("NewTimeSlot");
+				linkedMessageReturn.add(user);*/
 			}
 
 		}
@@ -155,9 +165,12 @@ public class Communication extends Observable {
 					loginStatus.add(status); //Adding the status as second string in the list so the client know what GUI to open.
 					System.out.println("login" + status + ": is sent back due to RIGHT password:");
 
-					LinkedList<String> listToSend = new LinkedList<String>();
+					LinkedList<Object> listToSend = new LinkedList<Object>();
 					listToSend.add("login");
 					listToSend.add(status);
+					if(status.equals("Employee")){
+						listToSend.add(user);
+					}
 
 					clientHandler.send(listToSend);
 					
